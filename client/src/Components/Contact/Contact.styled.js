@@ -9,6 +9,7 @@ export const StyledContact = styled.div`
   display: flex;
   flex-direction: column;
   border: 2px solid yellowgreen;
+  border-top: 8px solid yellowgreen;
 `;
 
 export const StyledSingleContact = styled.div`
@@ -29,4 +30,14 @@ export const StyledStatus = styled.div`
   border-radius: 50%;
   margin-left: 1rem;
   margin-right: 1rem;
+`;
+
+export const StyledShortcut = styled.div`
+  background-color: yellowgreen;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
 `;

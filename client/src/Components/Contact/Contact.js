@@ -1,18 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 // IMPORT STYLED COMPONENTS
-import { StyledContact, StyledSingleContact, StyledStatus, StyledName  } from './Contact.styled';
+import { StyledContact, StyledSingleContact, StyledStatus, StyledName, StyledShortcut  } from './Contact.styled';
 
 const Contact = ({ onlineUsers }) => {
+  const [isDeployed, setIsDeployed] = useState(false);
+
+  const handleDeployContact = () => {
+    setIsDeployed(!isDeployed);
+  };
   return (
-    <StyledContact>
-      {onlineUsers && onlineUsers.map(user => (
-        <StyledSingleContact>
-          <StyledStatus />
-          <StyledName>{user.username}</StyledName>
-      </StyledSingleContact>
-      ))}
-    </StyledContact>
+    <>
+    {isDeployed && (
+      <StyledContact onClick={handleDeployContact}>
+        {onlineUsers && onlineUsers.map(user => (
+          <StyledSingleContact>
+            <StyledStatus />
+            <StyledName>{user.username}</StyledName>
+        </StyledSingleContact>
+        ))}
+      </StyledContact>
+    )}
+    {!isDeployed && (
+      <StyledShortcut onClick={handleDeployContact} />
+    )}
+    
+    </>
   );
 };
 

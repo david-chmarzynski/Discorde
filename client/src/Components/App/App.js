@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import io from 'socket.io-client';
 
 // IMPORT STYLED COMPONENTS
-import { StyledApp } from './App.styled';
+import { StyledApp, StyledButton } from './App.styled';
 
 // IMPORT COMPONENTS
 import Signin from '../Signin/Signin';
@@ -91,8 +91,12 @@ const App = () => {
           setAlert={setAlert}
         />
       )}
-      <button onClick={e => signout(e)}>Signout</button>
-      <Contact onlineUsers={onlineUsers} />
+      {isOnline && (
+        <>
+        <StyledButton onClick={e => signout(e)}>Signout</StyledButton>
+        <Contact onlineUsers={onlineUsers} />
+        </>
+      )}
     </StyledApp>
   );
 }

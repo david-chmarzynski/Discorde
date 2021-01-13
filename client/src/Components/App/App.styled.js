@@ -6,3 +6,8 @@ export const StyledApp = styled.div`
   background-color: black;
   color: yellowgreen;
 `;
+
+export const StyledButton = styled.button`
+  border: none;
+  background-color: yellowgreen;
+`;
