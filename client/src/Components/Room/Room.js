@@ -1,14 +1,43 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 
 // IMPORT STYLED COMPONENTS
-import { StyledRoom } from './Room.styled';
+import { StyledRoom, StyledMessageArea, StyledMessageCurrent, StyledInputArea, StyledTextArea, StyledSendButton, StyledMessageStranger } from './Room.styled';
 
-const Room = ({ messages, userId }) => {
+
+const Room = ({ message, messages, userId, sendMessage, setMessage, roomId }) => {
+  const ref = useRef(null);
+
+  const scrollToBottom = () => {
+    console.log("should scroll")
+    ref.current.scrollTo({ 
+      behavior: "smooth",
+      top: document.getElementById('scroller').scrollHeight
+    });
+  };
+
+  useEffect(scrollToBottom, [messages]);
   return (
     <StyledRoom>
-      {messages.map(message => (
-        <p>{message.data}</p>
-      ))}
+      <StyledMessageArea ref={ref} id="scroller">
+        {messages.map(message => {
+          return message.room === roomId && message.author === userId ? <StyledMessageCurrent><p>{message.data}</p></StyledMessageCurrent> : 
+          message.room === roomId && message.author !== userId ? <StyledMessageStranger><p>{message.data}</p></StyledMessageStranger> : null
+        })}
+      </StyledMessageArea>
+      <StyledInputArea>
+        <StyledTextArea
+          name=""
+          id=""
+          cols="20"
+          rows="1"
+          wrap="hard"
+          placeholder="Ecrivez votre message..."
+          value={message}
+          onKeyPress={e => e.key === "Enter" ? sendMessage(e) : null}
+          onChange={e => setMessage(e.target.value)}
+        />
+        <StyledSendButton onClick={e => sendMessage(e)}>Send</StyledSendButton>
+      </StyledInputArea>
     </StyledRoom>
   );
 };

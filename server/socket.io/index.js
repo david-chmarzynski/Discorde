@@ -5,6 +5,7 @@ const { server } = require('../server');
 const { signin, signout, disconnect } = require('../controllers/auth.controller');
 const { getUsers } = require('../controllers/user.controller');
 const { joinRoom } = require('../controllers/room.controller');
+const { sendMessage } = require('../controllers/message.controller');
 
 // ENTRY POINT NAMESPACE
 const ios = socketio(server);
@@ -23,9 +24,9 @@ chatroom.on('connect', (socket) => {
   getUsers(chatroom);
   signout(socket, chatroom);
   joinRoom(socket, chatroom);
+  sendMessage(socket, chatroom);
 
   socket.on('disconnect', () => {
     disconnect(socket, chatroom);
-    console.log(socket.rooms);
   });
 });

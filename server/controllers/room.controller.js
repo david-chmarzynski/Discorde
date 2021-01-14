@@ -17,12 +17,10 @@ exports.joinRoom = (socket, chatroom) => {
           roomId: room[0]._id,
           messages: messages
         };
-        console.log(room[0].title);
         callback(res);
       } else {
         let newRoom = new Room({
-          title: "heeep",
-          index: 1,
+          title: Math.floor(Math.random() * Math.floor(999999999)),
           users: [
             userId,
             id

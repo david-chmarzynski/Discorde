@@ -19,3 +19,7 @@ exports.findOnlineUsers = () => {
 exports.findUserBySocketId = (socketId) => {
   return User.findOne({ "socket_id": socketId }).exec();
 };
+
+exports.findUserById = (userId) => {
+  return User.findOne({ "_id": userId }).exec();
+};

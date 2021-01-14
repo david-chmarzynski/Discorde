@@ -25,8 +25,9 @@ const App = () => {
   const [alert, setAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [onlineUsers, setOnlineUsers] = useState();
-  const [roomId, setRoomId] = useState("");
+  const [roomId, setRoomId] = useState([]);
   const [messages, setMessages] = useState([]);
+  const [message, setMessage] = useState('');
 
   // MAIN NAMESPACE CONNEXION
   useEffect(() => {
@@ -42,6 +43,10 @@ const App = () => {
 
         chatroom.on('getUsers', (res) => {
           setOnlineUsers(res);
+        });
+
+        chatroom.on('getMessages', (res) => {
+          setMessages(res);
         });
       });
     };
@@ -85,8 +90,18 @@ const App = () => {
     const ids = {userId, id};
     chatroom.emit('joinRoom', ids, (res) => {
       console.log(res);
-      setRoomId(res.roomId);
+      setRoomId([res.roomId]);
       setMessages(res.messages);
+    });
+  };
+  
+  const sendMessage = (e) => {
+    e.preventDefault();
+    const datas = {message, userId, roomId};
+    chatroom.emit('sendMessage', datas, (res) => {
+      console.log("Sended Message");
+      console.log(res);
+      setMessage('');
     });
   };
   
@@ -112,10 +127,16 @@ const App = () => {
         </>
       )}
       {roomId && (
-        <Room 
-          messages={messages}
-          userId={userId}
+        roomId.map(room => (
+          <Room
+            message={message}
+            messages={messages}
+            userId={userId}
+            sendMessage={sendMessage}
+            setMessage={setMessage}
+            roomId={room}
         />
+        ))
       )}
     </StyledApp>
   );
