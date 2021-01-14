@@ -76,6 +76,10 @@ export const StyledInputArea = styled.div`
     position: relative;
     border-radius: 30px;
     background-color: #2e3031;
+
+    svg {
+      color: #0199ff;
+    }
 `;
 
 export const StyledTextArea = styled.textarea`

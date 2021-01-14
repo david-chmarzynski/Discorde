@@ -1,7 +1,19 @@
 import React, { useEffect, useRef } from 'react';
 
 // IMPORT STYLED COMPONENTS
-import { StyledRoom, StyledMessageArea, StyledMessageCurrent, StyledInputArea, StyledTextArea, StyledSendButton, StyledMessageStranger } from './Room.styled';
+import {
+  StyledRoom,
+  StyledMessageArea,
+  StyledMessageCurrent,
+  StyledInputArea,
+  StyledTextArea,
+  StyledSendButton,
+  StyledMessageStranger
+} from './Room.styled';
+
+// IMPORT MUI COMPONENTS
+import { IconButton } from '@material-ui/core';
+import SendIcon from '@material-ui/icons/Send';
 
 
 const Room = ({ message, messages, userId, sendMessage, setMessage, roomId }) => {
@@ -36,7 +48,9 @@ const Room = ({ message, messages, userId, sendMessage, setMessage, roomId }) =>
           onKeyPress={e => e.key === "Enter" ? sendMessage(e) : null}
           onChange={e => setMessage(e.target.value)}
         />
-        <StyledSendButton onClick={e => sendMessage(e)}>Send</StyledSendButton>
+        <IconButton>
+          <SendIcon onClick={e => sendMessage(e)} />
+        </IconButton>
       </StyledInputArea>
     </StyledRoom>
   );
