@@ -40,7 +40,6 @@ exports.signin = (socket) => {
 
 exports.signout = (socket, chatroom) => {
   socket.on('signout', async (userId, callback) => {
-    console.log("Try to Signout");
     try {
       await setUserOffline(userId);
       let res = {

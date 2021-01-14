@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 // IMPORT STYLED COMPONENTS
 import { StyledContact, StyledSingleContact, StyledStatus, StyledName, StyledShortcut  } from './Contact.styled';
 
-const Contact = ({ onlineUsers }) => {
+const Contact = ({ onlineUsers, joinRoom }) => {
   const [isDeployed, setIsDeployed] = useState(false);
 
   const handleDeployContact = () => {
@@ -16,7 +16,7 @@ const Contact = ({ onlineUsers }) => {
         {onlineUsers && onlineUsers.map(user => (
           <StyledSingleContact>
             <StyledStatus />
-            <StyledName>{user.username}</StyledName>
+            <p id={user._id} onClick={e => joinRoom(e)}>{user.username}</p>
         </StyledSingleContact>
         ))}
       </StyledContact>

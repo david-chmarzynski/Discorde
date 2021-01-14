@@ -10,6 +10,7 @@ import { StyledApp, StyledButton } from './App.styled';
 import Signin from '../Signin/Signin';
 import Alert from '../Alert/Alert';
 import Contact from '../Contact/Contact';
+import Room from '../Room/Room';
 
 // SOCKETS
 let ios;
@@ -24,6 +25,8 @@ const App = () => {
   const [alert, setAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [onlineUsers, setOnlineUsers] = useState();
+  const [roomId, setRoomId] = useState("");
+  const [messages, setMessages] = useState([]);
 
   // MAIN NAMESPACE CONNEXION
   useEffect(() => {
@@ -75,6 +78,17 @@ const App = () => {
       }
     })
   };
+
+  const joinRoom = (e) => {
+    e.preventDefault();
+    const id = e.target.id;
+    const ids = {userId, id};
+    chatroom.emit('joinRoom', ids, (res) => {
+      console.log(res);
+      setRoomId(res.roomId);
+      setMessages(res.messages);
+    });
+  };
   
   return (
     <StyledApp>
@@ -94,8 +108,14 @@ const App = () => {
       {isOnline && (
         <>
         <StyledButton onClick={e => signout(e)}>Signout</StyledButton>
-        <Contact onlineUsers={onlineUsers} />
+        <Contact onlineUsers={onlineUsers} joinRoom={joinRoom}/>
         </>
+      )}
+      {roomId && (
+        <Room 
+          messages={messages}
+          userId={userId}
+        />
       )}
     </StyledApp>
   );
